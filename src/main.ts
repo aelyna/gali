@@ -1,24 +1,23 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter'
+import "./style.css"
+import * as PIXI from "pixi.js"
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+let app = new PIXI.Application({
+  width: 640,
+  height: 360
+})
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+document.body.appendChild(app.view as HTMLCanvasElement)
+
+
+let rect = new PIXI.Graphics()
+rect.beginFill(0xff0000)
+rect.drawRect(100, 100, 20, 20)
+app.stage.addChild(rect)
+
+
+let elapsed = 0.0;
+
+app.ticker.add((delta) => {
+  elapsed += delta;
+  rect.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+});
